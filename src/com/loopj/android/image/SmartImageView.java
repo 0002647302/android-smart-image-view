@@ -1,12 +1,13 @@
 package com.loopj.android.image;
 
-import android.content.Context;
-import android.graphics.Bitmap;
-import android.util.AttributeSet;
-import android.widget.ImageView;
-
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+
+import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.drawable.Drawable;
+import android.util.AttributeSet;
+import android.widget.ImageView;
 
 public class SmartImageView extends ImageView {
     private static final int LOADING_THREADS = 4;
@@ -49,7 +50,15 @@ public class SmartImageView extends ImageView {
     }
 
     public void setImageUrl(String url, final Integer fallbackResource, final Integer loadingResource, SmartImageTask.OnCompleteListener completeListener) {
-        setImage(new WebImage(url, null, null, null), fallbackResource, loadingResource, completeListener);
+        setImage(new WebImage(url, null, null, null), fallbackResource, null, loadingResource, completeListener);
+    }
+    
+    public void setImageUrl(String url, final Drawable loadingDrawable) {
+    	setImage(new WebImage(url, null, null, null), loadingDrawable);
+    }
+    
+    public void setImageUrl(String url, final Drawable loadingDrawable, SmartImageTask.OnCompleteListener completeListener) {
+    	setImage(new WebImage(url, null, null, null), loadingDrawable, completeListener);
     }
 
     // Helpers to set image by URL with all credentials
@@ -74,7 +83,15 @@ public class SmartImageView extends ImageView {
     }
 
     public void setImageUrl(String url, String username, String password, String userAgent, final Integer fallbackResource, final Integer loadingResource, SmartImageTask.OnCompleteListener completeListener) {
-        setImage(new WebImage(url, username, password, userAgent), fallbackResource, loadingResource, completeListener);
+        setImage(new WebImage(url, username, password, userAgent), fallbackResource, null, loadingResource, completeListener);
+    }
+    
+    public void setImageUrl(String url, String username, String password, String userAgent, final Drawable loadingDrawable) {
+    	setImage(new WebImage(url, username, password, userAgent), loadingDrawable);
+    }
+    
+    public void setImageUrl(String url, String username, String password, String userAgent, final Drawable loadingDrawable, SmartImageTask.OnCompleteListener completeListener) {
+    	setImage(new WebImage(url, username, password, userAgent), loadingDrawable, completeListener);
     }
     
     // Helpers to set image by URL with only login credentials
@@ -99,7 +116,15 @@ public class SmartImageView extends ImageView {
     }
 
     public void setImageUrl(String url, String username, String password, final Integer fallbackResource, final Integer loadingResource, SmartImageTask.OnCompleteListener completeListener) {
-        setImage(new WebImage(url, username, password, null), fallbackResource, loadingResource, completeListener);
+        setImage(new WebImage(url, username, password, null), fallbackResource, null, loadingResource, completeListener);
+    }
+    
+    public void setImageUrl(String url, String username, String password, final Drawable loadingDrawable) {
+    	setImage(new WebImage(url, username, password, null), loadingDrawable);
+    }
+    
+    public void setImageUrl(String url, String username, String password, final Drawable loadingDrawable, SmartImageTask.OnCompleteListener completeListener) {
+    	setImage(new WebImage(url, username, password, null), loadingDrawable, completeListener);
     }
     
     
@@ -125,7 +150,15 @@ public class SmartImageView extends ImageView {
     }
 
     public void setImageUrl(String url, String userAgent, final Integer fallbackResource, final Integer loadingResource, SmartImageTask.OnCompleteListener completeListener) {
-        setImage(new WebImage(url, null, null, userAgent), fallbackResource, loadingResource, completeListener);
+        setImage(new WebImage(url, null, null, userAgent), fallbackResource, null, loadingResource, completeListener);
+    }
+    
+    public void setImageUrl(String url, String userAgent, final Drawable loadingDrawable) {
+    	setImage(new WebImage(url, null, null, userAgent), loadingDrawable);
+    }
+    
+    public void setImageUrl(String url, String userAgent, final Drawable loadingDrawable, SmartImageTask.OnCompleteListener completeListener) {
+    	setImage(new WebImage(url, null, null, userAgent), loadingDrawable, completeListener);
     }
 
 
@@ -145,29 +178,41 @@ public class SmartImageView extends ImageView {
 
     // Set image using SmartImage object
     public void setImage(final SmartImage image) {
-        setImage(image, null, null, null);
+        setImage(image, null, null, null, null);
     }
 
     public void setImage(final SmartImage image, final SmartImageTask.OnCompleteListener completeListener) {
-        setImage(image, null, null, completeListener);
+        setImage(image, null, null, null, completeListener);
     }
 
     public void setImage(final SmartImage image, final Integer fallbackResource) {
-        setImage(image, fallbackResource, fallbackResource, null);
+        setImage(image, fallbackResource, null, fallbackResource, null);
     }
 
     public void setImage(final SmartImage image, final Integer fallbackResource, SmartImageTask.OnCompleteListener completeListener) {
-        setImage(image, fallbackResource, fallbackResource, completeListener);
+        setImage(image, fallbackResource, null, fallbackResource, completeListener);
     }
 
     public void setImage(final SmartImage image, final Integer fallbackResource, final Integer loadingResource) {
-        setImage(image, fallbackResource, loadingResource, null);
+        setImage(image, fallbackResource, null, loadingResource, null);
+    }
+    
+    public void setImage(final SmartImage image, final Drawable loadingDrawable) {
+        setImage(image, null, loadingDrawable, null, null);
+    }
+    
+    public void setImage(final SmartImage image, final Drawable loadingDrawable, SmartImageTask.OnCompleteListener completeListener) {
+        setImage(image, null, loadingDrawable, null, completeListener);
     }
 
-    public void setImage(final SmartImage image, final Integer fallbackResource, final Integer loadingResource, final SmartImageTask.OnCompleteListener completeListener) {
+    public void setImage(final SmartImage image, final Integer fallbackResource, final Drawable loadingDrawable, final Integer loadingResource, final SmartImageTask.OnCompleteListener completeListener) {
         // Set a loading resource
         if(loadingResource != null){
             setImageResource(loadingResource);
+        }
+        
+        if(loadingDrawable != null){
+        	setImageDrawable(loadingDrawable);
         }
 
         // Cancel any existing tasks for this image view
