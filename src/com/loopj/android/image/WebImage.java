@@ -15,12 +15,14 @@ public class WebImage implements SmartImage {
     private static WebImageCache webImageCache;
 
     private String url;
+    private Integer scale;
     private String userAgent;
     private String username;
     private String password;
 
-    public WebImage(String url, String username, String password, String userAgent) {
+    public WebImage(String url, Integer scale, String username, String password, String userAgent) {
         this.url = url;
+        this.scale = scale;
         this.userAgent = userAgent;
         this.username = username;
         this.password = password;
@@ -35,7 +37,7 @@ public class WebImage implements SmartImage {
         // Try getting bitmap from cache first
         Bitmap bitmap = null;
         if(url != null) {
-            bitmap = webImageCache.get(url);
+            bitmap = webImageCache.get(url, scale);
             if(bitmap == null) {
                 bitmap = getBitmapFromUrl(url, username, password, userAgent);
                 if(bitmap != null){

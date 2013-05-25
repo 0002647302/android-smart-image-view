@@ -40,7 +40,7 @@ public class WebImageCache {
         writeThread = Executors.newSingleThreadExecutor();
     }
 
-    public Bitmap get(final String url) {
+    public Bitmap get(final String url, final Integer scale) {
         Bitmap bitmap = null;
 
         // Check for image in memory
@@ -48,7 +48,7 @@ public class WebImageCache {
 
         // Check for image on disk cache
         if(bitmap == null) {
-            bitmap = getBitmapFromDisk(url);
+            bitmap = getBitmapFromDisk(url, scale);
 
             // Write bitmap back into memory cache
             if(bitmap != null) {
@@ -133,12 +133,16 @@ public class WebImageCache {
         return bitmap;
     }
 
-    private Bitmap getBitmapFromDisk(String url) {
+    private Bitmap getBitmapFromDisk(String url, Integer scale) {
         Bitmap bitmap = null;
         if(diskCacheEnabled){
             String filePath = getFilePath(url);
             File file = new File(filePath);
-            if(file.exists()) {
+            if(file.exists() && scale > 1) {
+            	BitmapFactory.Options bounds = new BitmapFactory.Options();
+            	bounds.inSampleSize = scale;
+                bitmap = BitmapFactory.decodeFile(filePath, bounds);
+            } else if(file.exists()) {
                 bitmap = BitmapFactory.decodeFile(filePath);
             }
         }
