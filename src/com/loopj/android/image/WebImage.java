@@ -15,9 +15,15 @@ public class WebImage implements SmartImage {
     private static WebImageCache webImageCache;
 
     private String url;
+    private String userAgent;
+    private String username;
+    private String password;
 
-    public WebImage(String url) {
+    public WebImage(String url, String username, String password, String userAgent) {
         this.url = url;
+        this.userAgent = userAgent;
+        this.username = username;
+        this.password = password;
     }
 
     public Bitmap getBitmap(Context context) {
@@ -31,7 +37,7 @@ public class WebImage implements SmartImage {
         if(url != null) {
             bitmap = webImageCache.get(url);
             if(bitmap == null) {
-                bitmap = getBitmapFromUrl(url);
+                bitmap = getBitmapFromUrl(url, username, password, userAgent);
                 if(bitmap != null){
                     webImageCache.put(url, bitmap);
                 }
@@ -41,11 +47,17 @@ public class WebImage implements SmartImage {
         return bitmap;
     }
 
-    private Bitmap getBitmapFromUrl(String url) {
+    private Bitmap getBitmapFromUrl(String url, String username, String password, String userAgent) {
         Bitmap bitmap = null;
 
         try {
             URLConnection conn = new URL(url).openConnection();
+            if (userAgent != null) {
+    			conn.setRequestProperty("User-Agent", userAgent);
+    		}
+    		if (username != null && password != null) {
+    			conn.setRequestProperty("Authorization", "basic " + Base64.encodeBytes((username + ":" + password).getBytes()));
+    		}
             conn.setConnectTimeout(CONNECT_TIMEOUT);
             conn.setReadTimeout(READ_TIMEOUT);
             bitmap = BitmapFactory.decodeStream((InputStream) conn.getContent());

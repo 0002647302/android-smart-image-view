@@ -27,30 +27,105 @@ public class SmartImageView extends ImageView {
         super(context, attrs, defStyle);
     }
 
-
-    // Helpers to set image by URL
+    // Helpers to set image by URL without credentials
     public void setImageUrl(String url) {
-        setImage(new WebImage(url));
+        setImage(new WebImage(url, null, null, null));
     }
 
     public void setImageUrl(String url, SmartImageTask.OnCompleteListener completeListener) {
-        setImage(new WebImage(url), completeListener);
+        setImage(new WebImage(url, null, null, null), completeListener);
     }
 
     public void setImageUrl(String url, final Integer fallbackResource) {
-        setImage(new WebImage(url), fallbackResource);
+        setImage(new WebImage(url, null, null, null), fallbackResource);
     }
 
     public void setImageUrl(String url, final Integer fallbackResource, SmartImageTask.OnCompleteListener completeListener) {
-        setImage(new WebImage(url), fallbackResource, completeListener);
+        setImage(new WebImage(url, null, null, null), fallbackResource, completeListener);
     }
 
     public void setImageUrl(String url, final Integer fallbackResource, final Integer loadingResource) {
-        setImage(new WebImage(url), fallbackResource, loadingResource);
+        setImage(new WebImage(url, null, null, null), fallbackResource, loadingResource);
     }
 
     public void setImageUrl(String url, final Integer fallbackResource, final Integer loadingResource, SmartImageTask.OnCompleteListener completeListener) {
-        setImage(new WebImage(url), fallbackResource, loadingResource, completeListener);
+        setImage(new WebImage(url, null, null, null), fallbackResource, loadingResource, completeListener);
+    }
+
+    // Helpers to set image by URL with all credentials
+    public void setImageUrl(String url, String username, String password, String userAgent) {
+        setImage(new WebImage(url, username, password, userAgent));
+    }
+
+    public void setImageUrl(String url, String username, String password, String userAgent, SmartImageTask.OnCompleteListener completeListener) {
+        setImage(new WebImage(url, username, password, userAgent), completeListener);
+    }
+
+    public void setImageUrl(String url, String username, String password, String userAgent, final Integer fallbackResource) {
+        setImage(new WebImage(url, username, password, userAgent), fallbackResource);
+    }
+
+    public void setImageUrl(String url, String username, String password, String userAgent, final Integer fallbackResource, SmartImageTask.OnCompleteListener completeListener) {
+        setImage(new WebImage(url, username, password, userAgent), fallbackResource, completeListener);
+    }
+
+    public void setImageUrl(String url, String username, String password, String userAgent, final Integer fallbackResource, final Integer loadingResource) {
+        setImage(new WebImage(url, username, password, userAgent), fallbackResource, loadingResource);
+    }
+
+    public void setImageUrl(String url, String username, String password, String userAgent, final Integer fallbackResource, final Integer loadingResource, SmartImageTask.OnCompleteListener completeListener) {
+        setImage(new WebImage(url, username, password, userAgent), fallbackResource, loadingResource, completeListener);
+    }
+    
+    // Helpers to set image by URL with only login credentials
+    public void setImageUrl(String url, String username, String password) {
+        setImage(new WebImage(url, username, password, null));
+    }
+
+    public void setImageUrl(String url, String username, String password, SmartImageTask.OnCompleteListener completeListener) {
+        setImage(new WebImage(url, username, password, null), completeListener);
+    }
+
+    public void setImageUrl(String url, String username, String password, final Integer fallbackResource) {
+        setImage(new WebImage(url, username, password, null), fallbackResource);
+    }
+
+    public void setImageUrl(String url, String username, String password, final Integer fallbackResource, SmartImageTask.OnCompleteListener completeListener) {
+        setImage(new WebImage(url, username, password, null), fallbackResource, completeListener);
+    }
+
+    public void setImageUrl(String url, String username, String password, final Integer fallbackResource, final Integer loadingResource) {
+        setImage(new WebImage(url, username, password, null), fallbackResource, loadingResource);
+    }
+
+    public void setImageUrl(String url, String username, String password, final Integer fallbackResource, final Integer loadingResource, SmartImageTask.OnCompleteListener completeListener) {
+        setImage(new WebImage(url, username, password, null), fallbackResource, loadingResource, completeListener);
+    }
+    
+    
+    // Helpers to set image by URL with only the userAgent parameter
+    public void setImageUrl(String url, String userAgent) {
+        setImage(new WebImage(url, null, null, userAgent));
+    }
+
+    public void setImageUrl(String url, String userAgent, SmartImageTask.OnCompleteListener completeListener) {
+        setImage(new WebImage(url, null, null, userAgent), completeListener);
+    }
+
+    public void setImageUrl(String url, String userAgent, final Integer fallbackResource) {
+        setImage(new WebImage(url, null, null, userAgent), fallbackResource);
+    }
+
+    public void setImageUrl(String url, String userAgent, final Integer fallbackResource, SmartImageTask.OnCompleteListener completeListener) {
+        setImage(new WebImage(url, null, null, userAgent), fallbackResource, completeListener);
+    }
+
+    public void setImageUrl(String url, String userAgent, final Integer fallbackResource, final Integer loadingResource) {
+        setImage(new WebImage(url, null, null, userAgent), fallbackResource, loadingResource);
+    }
+
+    public void setImageUrl(String url, String userAgent, final Integer fallbackResource, final Integer loadingResource, SmartImageTask.OnCompleteListener completeListener) {
+        setImage(new WebImage(url, null, null, userAgent), fallbackResource, loadingResource, completeListener);
     }
 
 
